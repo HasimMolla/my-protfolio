@@ -152,7 +152,7 @@ export default function Home() {
                       <Image
                         alt="GitHub"
                         className="w-5 h-5"
-                        src="/assets/peerlist.webp"
+                        src="/assets/peerlist.jpg"
                         width={100}
                         height={100}
                       />
