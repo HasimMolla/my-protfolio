@@ -73,7 +73,7 @@ export default function Home() {
 
         {/* Hero section */}
         <main className="w-full flex flex-col items-center">
-          <div className="flex flex-row gap-10 items-center pb-20 pt-10 max-md:flex-col max-md:text-center">
+          <div className="flex flex-row gap-10 items-center py-10 max-md:flex-col max-md:text-center">
             <div className="flex-shrink-0 mb-4">
               {/* Profile image placeholder with border */}
               <div className="rounded-full border-4 border-[#e36a89] p-1 w-40 h-40 flex items-center justify-center bg-[#222]">
@@ -143,6 +143,21 @@ export default function Home() {
                       />
                       GitHub
                     </Link>
+                    <Link
+                      href="https://peerlist.io/hasimmolla"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex gap-1 items-center hover:text-white ml-2"
+                    >
+                      <Image
+                        alt="GitHub"
+                        className="w-5 h-5"
+                        src="/assets/peerlist.webp"
+                        width={100}
+                        height={100}
+                      />
+                      Peerlist
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -150,7 +165,7 @@ export default function Home() {
           </div>
 
           {/* Tech Stack */}
-          <section className="w-full mb-20">
+          <section className="w-full py-10">
             <h2 className="font-bold text-lg tracking-widest text-white uppercase mb-10">
               Tools & Technologies
             </h2>
@@ -174,8 +189,8 @@ export default function Home() {
           </section>
 
           {/* Work Experience */}
-          <section id="work-experience" className="w-full mt-24">
-            <h2 className="font-bold text-lg tracking-widest text-white uppercase mb-10">
+          <section id="work-experience" className="w-full space-y-5 py-10">
+            <h2 className="font-bold text-lg tracking-widest text-white uppercase ">
               Work Experience
             </h2>
             <div className="flex flex-col w-full gap-14">
@@ -223,43 +238,35 @@ export default function Home() {
           </section>
 
           {/* Projects */}
-          <section id="projects" className="w-full mt-24">
-            <h2 className="font-bold text-lg tracking-widest text-white uppercase mb-10">
+          <section id="projects" className="w-full py-10 space-y-5">
+            <h2 className="font-bold text-lg tracking-widest text-white uppercase ">
               Projects
             </h2>
             <div className="flex flex-col w-full">
               <div className="flex items-start gap-8">
-                <div className="rounded-lg w-[640px] border border-[#eceae8]/50 p-5 flex flex-col gap-5">
+                <div className="rounded-lg w-[640px] border border-[#eceae8]/50 p-2 md:p-5 flex flex-col gap-5">
                   {/* Project image */}
                   <Image
-                    src="https://ext.same-assets.com/2104456481/849522504.png"
-                    width={100}
-                    height={100}
+                    src="/assets/project/nirmaanUi.png"
+                    width={500}
+                    height={500}
                     alt="Tribe app screenshot"
-                    className="rounded-lg w-10 h-10 border border-[#eceae8]/20 object-cover mb-4"
+                    className="rounded-[10px] w-full h-[200px] object-cover md:h-auto border border-[#eceae8]/20  "
                   />
-                  <div className="flex flex-col">
+                  <div className="flex flex-col  space-y-2 md:space-y-3">
                     <p className="font-semibold text-white text-xl tracking-widest">
-                      TRIBE
+                      Nirmaan UI
                     </p>
-                    <p className="text-[#eceae8] mt-3">
-                      <span className="text-white">TRIBE</span> is a community
-                      app inspired by{" "}
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white hover:underline"
-                        href="https://www.skool.com/"
-                      >
-                        Skool
-                      </a>
-                      , where users can create or join communities, share posts,
-                      like them, comment on them, and chat in real time with
-                      other users.
+                    <p className="text-[#a7adb1] ">
+                      <span className="text-[#ffffff]">Nirmaan UI</span> is a
+                      frontend UI library—built with Shadcn and Tailwind CSS—to
+                      help developers build modern, responsive apps faster and
+                      smarter. Not just components, but a creative toolkit for
+                      crafting exceptional user experiences.
                     </p>
                     <div className="grid grid-cols-4 max-sm:grid-cols-3 max-[500px]:grid-cols-2 items-center gap-2 mt-5">
                       <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-blue-600/20 text-blue-300">
-                        <p className="text-xs whitespace-nowrap">React</p>
+                        <p className="text-xs whitespace-nowrap">Next</p>
                       </div>
                       <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-blue-500/20 text-blue-300">
                         <p className="text-xs whitespace-nowrap">TypeScript</p>
@@ -270,47 +277,37 @@ export default function Home() {
                       <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-white/20 text-white">
                         <p className="text-xs whitespace-nowrap">Shadcn</p>
                       </div>
-                      <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-green-600/20 text-green-300">
-                        <p className="text-xs whitespace-nowrap">Cypress</p>
-                      </div>
-                      <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-white/20 text-white">
-                        <p className="text-xs whitespace-nowrap">Pocketbase</p>
-                      </div>
-                      <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-purple-400/20 text-purple-300">
-                        <p className="text-xs whitespace-nowrap">
-                          Tanstack Router
-                        </p>
-                      </div>
-                      <div className="flex h-6 items-center justify-center gap-1.5 px-4 rounded-full bg-red-400/20 text-red-300">
-                        <p className="text-xs whitespace-nowrap">
-                          Tanstack Query
-                        </p>
-                      </div>
                     </div>
-                    <div className="flex items-center gap-2 w-full mt-8 max-md:flex-col">
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-1/3 bg-[#eceae8]/10 uppercase text-xs transition-all hover:bg-[#eceae8]/20 rounded-full font-bold text-white flex items-center justify-center px-4 py-2 gap-2 max-md:w-full"
-                        href="https://tribe-community-app.vercel.app/"
-                      >
-                        Live demo
-                      </a>
+                    <div className="flex items-center gap-2 w-full max-md:flex-col">
                       <Link
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-1/3 bg-[#eceae8]/10 uppercase text-xs transition-all hover:bg-[#eceae8]/20 rounded-full font-bold text-white flex items-center justify-center px-4 py-2 gap-2 max-md:w-full"
-                        href="https://github.com/stefvndev/tribe-community-app"
+                        href="https://github.com/HasimMolla/Nirmaan-ui"
                       >
-                        Source code
+                        <Image
+                          src="/assets/project/live.svg"
+                          width={100}
+                          height={100}
+                          alt="live icon"
+                          className="w-5 h-5"
+                        />
+                        Live demo
                       </Link>
                       <Link
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-1/3 bg-[#eceae8]/10 uppercase text-xs transition-all hover:bg-[#eceae8]/20 rounded-full font-bold text-white flex items-center justify-center px-4 py-2 gap-2 max-md:w-full"
-                        href="https://www.youtube.com/watch?v=gKtcJ9Fn6KU"
+                        href="https://github.com/HasimMolla/Nirmaan-ui"
                       >
-                        Watch video
+                        <Image
+                          src="/assets/project/git.svg"
+                          width={100}
+                          height={100}
+                          alt="live icon"
+                          className="w-5 h-5"
+                        />
+                        Source code
                       </Link>
                     </div>
                   </div>
@@ -326,20 +323,13 @@ export default function Home() {
             className="w-full flex items-center pt-6 border-t border-[#eceae8]/20 pb-1 mt-5"
           >
             <div className="flex items-center gap-2 text-[#eceae8] hover:text-white">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 inline-block"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 12H8m0 0V8m0 4v4m8-4H8m8 0h-4m8 0a9 9 0 11-17.938 2.299A9 9 0 0121 12z"
-                />
-              </svg>
+              <Image
+                src="/assets/mail.svg"
+                width={100}
+                height={100}
+                alt="live icon"
+                className="w-5 h-5"
+              />
               <a href="mailto:mhasim790@gmail.com">mhasim790@gmail.com</a>
             </div>
           </footer>
