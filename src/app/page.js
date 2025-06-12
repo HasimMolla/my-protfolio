@@ -283,7 +283,7 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-1/3 bg-[#eceae8]/10 uppercase text-xs transition-all hover:bg-[#eceae8]/20 rounded-full font-bold text-white flex items-center justify-center px-4 py-2 gap-2 max-md:w-full"
-                        href="https://github.com/HasimMolla/Nirmaan-ui"
+                        href="https://nirmaan-ui.vercel.app"
                       >
                         <Image
                           src="/assets/project/live.svg"
