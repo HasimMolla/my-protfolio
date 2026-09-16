@@ -1,14 +1,12 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import coreWebVitals from "eslint-config-next/core-web-vitals";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
+// eslint-config-next v16 ships flat configs directly, so the old
+// FlatCompat + `extends("next/core-web-vitals")` shim is no longer needed.
+const eslintConfig = [
+  {
+    ignores: [".next/**", "out/**", "build/**", "node_modules/**"],
+  },
+  ...coreWebVitals,
+];
 
 export default eslintConfig;
