@@ -27,9 +27,10 @@ export function Contact() {
                 <span className="font-serif text-[1.1em] italic">worth using</span>.
               </h3>
               <p className="mt-2 text-pretty text-[0.9rem] leading-relaxed text-muted">
-                I&apos;m open to frontend roles and freelance work, and equally
-                happy with a conversation that goes nowhere in particular. I
-                read everything and usually reply within a day.
+                Open to product roles and freelance work — and equally happy
+                with a conversation that goes nowhere in particular. If
+                you&apos;re building something and the stack isn&apos;t one I
+                know yet, that&apos;s usually a point in its favour.
               </p>
             </div>
           </div>

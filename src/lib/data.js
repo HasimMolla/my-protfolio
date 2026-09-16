@@ -4,14 +4,12 @@
 export const site = {
   name: "Molla Hasim",
   shortName: "Hasim",
-  role: "Frontend Software Developer",
+  role: "Software Developer",
   location: "Kolkata, India",
   email: "mhasim790@gmail.com",
   url: "https://mollahasim.com",
-  available: true,
-  availableLabel: "Open to work",
   tagline:
-    "Frontend developer building fast, considered web products with React and Next.js.",
+    "Software developer building web products with React and Next.js — and picking up whatever a problem actually calls for.",
 };
 
 export const socials = [
@@ -80,32 +78,38 @@ export const experience = [
   },
 ];
 
+// `tech` holds brand-icon keys from components/icons/brand-icons.jsx — the
+// project cards render them as a row of marks rather than text chips.
 export const projects = [
   {
     name: "MyPYQBuddy",
     year: "2026",
-    status: "Live",
     image: "/assets/project/mypyqbuddy.jpg",
     description:
-      "An exam-prep platform for India's life-science entrance tests — CSIR NET, DBT BET, GATE BT and IIT JAM. Students practise real previous-year questions, get AI explanations that break down the concept instead of the answer, and see analytics that point at the topics they keep losing marks on.",
-    tech: ["Next.js", "React", "Tailwind CSS", "AI Explanations", "Analytics"],
-    links: [{ label: "Live site", href: "https://mypyqbuddy.com/", kind: "live" }],
+      "Exam prep for India's life-science entrance tests. Real previous-year questions, AI explanations that break down the concept instead of the answer, and analytics that point at the topics you keep losing marks on.",
+    tech: ["nextjs", "react", "tailwind", "nodejs"],
+    live: "https://mypyqbuddy.com/",
   },
   {
     name: "Nirmaan UI",
     year: "2025",
-    status: "Open source",
     image: "/assets/project/nirmaan-ui.jpg",
     description:
-      "A frontend component library built on shadcn/ui and Tailwind CSS. Copy-paste blocks and components for people who would rather ship a product than re-solve the same layout problem every project.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
-    links: [
-      { label: "Live demo", href: "https://nirmaan-ui.vercel.app", kind: "live" },
-      {
-        label: "Source",
-        href: "https://github.com/HasimMolla/Nirmaan-ui",
-        kind: "source",
-      },
-    ],
+      "A component library built on shadcn/ui and Tailwind. Copy-paste blocks for people who would rather ship than re-solve the same layout problem every project.",
+    tech: ["nextjs", "typescript", "tailwind", "shadcn"],
+    live: "https://nirmaan-ui.vercel.app",
+    source: "https://github.com/HasimMolla/Nirmaan-ui",
   },
 ];
+
+// Screenshots used by the hover link previews in the intro copy.
+export const linkPreviews = {
+  "nirmaan-ui": {
+    href: "https://nirmaan-ui.vercel.app",
+    image: "/assets/project/nirmaan-ui.jpg",
+  },
+  mypyqbuddy: {
+    href: "https://mypyqbuddy.com/",
+    image: "/assets/project/mypyqbuddy.jpg",
+  },
+};

@@ -1,32 +1,22 @@
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { Globe } from "lucide-react";
 import { projects } from "@/lib/data";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { BrandIcon } from "@/components/icons/brand-icons";
+import { BrandIcon, brandIcons, brandHex } from "@/components/icons/brand-icons";
 
-function ProjectLink({ link }) {
+function IconLink({ href, label, children }) {
   return (
     <a
-      href={link.href}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group/link inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs text-muted transition-colors hover:border-line-strong hover:bg-bg-subtle hover:text-text"
+      aria-label={label}
+      title={label}
+      className="grid size-7 place-items-center rounded-full text-faint transition-colors hover:bg-bg-subtle hover:text-text"
     >
-      {link.kind === "source" ? (
-        <BrandIcon name="github" className="size-3.5" />
-      ) : (
-        <span className="relative flex size-1.5">
-          <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-          <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
-        </span>
-      )}
-      {link.label}
-      <ArrowUpRight
-        size={12}
-        className="text-faint transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-      />
+      {children}
     </a>
   );
 }
@@ -38,51 +28,69 @@ export function Projects() {
       label="Projects"
       lead="Things I build outside client work, usually because I wanted them to exist."
     >
-      <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-2">
         {projects.map((project, index) => (
-          <Reveal key={project.name} delay={index * 0.08}>
-            <SpotlightCard className="p-2.5">
-              <div className="overflow-hidden rounded-xl border border-line bg-bg-subtle">
+          <Reveal key={project.name} delay={index * 0.08} className="h-full">
+            <SpotlightCard className="flex h-full flex-col overflow-hidden">
+              <div className="overflow-hidden border-b border-line bg-bg-subtle">
                 <Image
                   src={project.image}
                   alt={`${project.name} screenshot`}
                   width={1280}
                   height={720}
-                  sizes="(max-width: 768px) 100vw, 720px"
-                  className="h-auto w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/spot:scale-[1.02]"
+                  sizes="(max-width: 640px) 100vw, 360px"
+                  className="h-auto w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/spot:scale-[1.03]"
                 />
               </div>
 
-              <div className="space-y-3.5 p-4 sm:p-5">
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <h3 className="text-lg font-semibold tracking-[-0.01em]">
+              <div className="flex flex-1 flex-col gap-2.5 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="truncate text-[0.95rem] font-semibold tracking-[-0.01em]">
                     {project.name}
                   </h3>
-                  <span className="font-mono text-[0.6875rem] tracking-widest text-faint uppercase">
-                    {project.year} · {project.status}
-                  </span>
+                  <div className="flex shrink-0 items-center">
+                    {project.source ? (
+                      <IconLink
+                        href={project.source}
+                        label={`${project.name} source on GitHub`}
+                      >
+                        <BrandIcon name="github" className="size-4" />
+                      </IconLink>
+                    ) : null}
+                    <IconLink
+                      href={project.live}
+                      label={`Visit ${project.name}`}
+                    >
+                      <Globe size={16} />
+                    </IconLink>
+                  </div>
                 </div>
 
-                <p className="text-pretty text-[0.9rem] leading-relaxed text-muted">
+                <p className="text-pretty text-[0.8125rem] leading-relaxed text-muted">
                   {project.description}
                 </p>
 
-                <ul className="flex flex-wrap gap-1.5" role="list">
-                  {project.tech.map((tech) => (
+                <ul className="mt-auto flex items-center gap-2.5 pt-1" role="list">
+                  {project.tech.map((key) => (
                     <li
-                      key={tech}
-                      className="rounded-md bg-bg-subtle px-2 py-1 font-mono text-[0.6875rem] text-muted"
+                      key={key}
+                      title={brandIcons[key]?.title}
+                      // Brand colour on hover, per theme — same trick as the
+                      // stack chips, no client-side theme detection needed.
+                      style={{
+                        "--brand": brandHex(key, false),
+                        "--brand-dark": brandHex(key, true),
+                      }}
+                      className="text-faint transition-colors duration-300 hover:text-[var(--brand)] dark:hover:text-[var(--brand-dark)]"
                     >
-                      {tech}
+                      <BrandIcon name={key} className="size-4" />
+                      <span className="sr-only">{brandIcons[key]?.title}</span>
                     </li>
                   ))}
+                  <li className="ml-auto font-mono text-[0.625rem] tracking-widest text-faint">
+                    {project.year}
+                  </li>
                 </ul>
-
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {project.links.map((link) => (
-                    <ProjectLink key={link.href} link={link} />
-                  ))}
-                </div>
               </div>
             </SpotlightCard>
           </Reveal>

@@ -22,7 +22,8 @@ src/
     globals.css        design tokens, base styles, utilities
   components/
     sections/          nav, hero, stack, experience, projects, contact, footer
-    ui/                reveal, text-reveal, spotlight-card, cursor-glow, copy-email, section, local-clock
+    ui/                reveal, text-reveal, spotlight-card, cursor-glow,
+                       flip-portrait, link-preview, copy-email, section, local-clock
     theme/             next-themes provider + toggle
     icons/             brand glyphs (generated once from simple-icons, not a runtime dep)
   lib/
@@ -34,6 +35,11 @@ src/
 **Editing content:** everything visible on the page — bio, links, projects, stack,
 experience — lives in `src/lib/data.js`. You shouldn't need to touch a component to
 update the site.
+
+A project's `tech` array holds **brand-icon keys** (`"nextjs"`, `"react"`, …) from
+`components/icons/brand-icons.jsx`, not free text — the cards render them as a row of
+marks. `linkPreviews` in the same file supplies the screenshots for the hover previews
+in the intro copy.
 
 ## Theming
 
