@@ -124,20 +124,7 @@ export function Hero() {
         </div>
       </Reveal>
 
-      {/* Signs off the letter above. */}
-      <Reveal delay={0.44}>
-        <Image
-          src="/assets/signature.png"
-          alt={`${site.name}'s signature`}
-          width={1200}
-          height={389}
-          // Same file as the nav mark, so this costs no extra request — but it
-          // can win LCP on a tall viewport, and Next matches that heuristic by
-          // src, so it needs to be eager too.
-          loading="eager"
-          className="signature-ink mt-5 h-10 w-auto opacity-90 sm:h-12"
-        />
-      </Reveal>
+      
 
       <Reveal delay={0.5}>
         <ul className="mt-5 flex flex-wrap items-center gap-2">

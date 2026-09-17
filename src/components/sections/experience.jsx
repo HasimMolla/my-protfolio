@@ -1,6 +1,7 @@
 import { experience } from "@/lib/data";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
+import { cn } from "@/lib/utils";
 
 export function Experience() {
   return (
@@ -10,32 +11,39 @@ export function Experience() {
       lead="Where I have been shipping, and what came out of it."
     >
       <ol className="relative space-y-10" role="list">
+        {/* One continuous rail behind every entry, rather than a segment per
+            item — with a single role the per-item version drew nothing. */}
+        <span
+          aria-hidden="true"
+          className="absolute top-2 bottom-1 left-0 w-px bg-line"
+        />
+
         {experience.map((job, index) => (
           <Reveal
             key={job.company}
             as="li"
             delay={index * 0.08}
-            className="group relative pl-6"
+            className="relative pl-6"
           >
-            {/* Timeline rail and node. The rail joins one role to the next, so
-                the final entry doesn't draw one. */}
+            {/* The node sits on the rail; ring-bg punches a gap around it.
+                Current vs past is carried by weight, not colour. */}
             <span
               aria-hidden="true"
-              className="absolute top-2 left-0 h-[calc(100%+1rem)] w-px bg-line group-last:hidden"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute top-1.5 left-0 size-[7px] -translate-x-[3px] rounded-full bg-text ring-4 ring-bg"
+              className={cn(
+                "absolute top-1.5 left-0 size-[9px] -translate-x-1/2 rounded-full ring-4 ring-bg",
+                job.current ? "bg-green-600" : "bg-faint",
+              )}
             />
 
-            <p className="section-label">{job.period}</p>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h3 className="text-base font-semibold tracking-[-0.01em]">
+                {job.role}
+                <span className="text-muted"> · {job.company}</span>
+              </h3>
+              <p className="section-label shrink-0">{job.period}</p>
+            </div>
 
-            <h3 className="mt-2 text-base font-semibold tracking-[-0.01em]">
-              {job.role}
-            </h3>
-            <p className="mt-0.5 text-sm text-muted">
-              {job.company} · {job.type}
-            </p>
+            <p className="mt-1 text-sm text-muted">{job.type}</p>
 
             <p className="mt-3 text-pretty text-[0.9rem] leading-relaxed text-muted">
               {job.summary}

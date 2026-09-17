@@ -19,19 +19,29 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
-    const ids = nav.map((item) => item.href.slice(1));
-    const sections = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    const sections = nav
+      .map((item) => document.getElementById(item.href.slice(1)))
+      .filter(Boolean)
+      // The nav lists Work before Stack, but Stack comes first on the page —
+      // the tiebreak below needs true document order, not menu order.
+      .sort((a, b) => a.offsetTop - b.offsetTop);
     if (!sections.length) return;
+
+    const order = sections.map((section) => section.id);
+
+    // A callback only carries the sections whose state *changed*, so what is
+    // currently in the band has to be tracked across calls. Deriving the active
+    // id from that set is what lets it clear to "" over the hero, instead of
+    // leaving the last section lit.
+    const inBand = new Set();
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Whichever tracked section is nearest the top of the viewport wins.
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) setActive(visible[0].target.id);
+        for (const entry of entries) {
+          if (entry.isIntersecting) inBand.add(entry.target.id);
+          else inBand.delete(entry.target.id);
+        }
+        setActive(order.find((id) => inBand.has(id)) ?? "");
       },
       { rootMargin: "-20% 0px -70% 0px", threshold: 0 },
     );
@@ -63,7 +73,7 @@ export function Nav() {
             // Always above the fold and the usual LCP element.
             preload
             loading="eager"
-            className="signature-ink h-5 w-auto sm:h-7"
+            className="signature-ink h-5 w-auto sm:h-8"
           />
         </a>
 

@@ -9,7 +9,7 @@ export function Section({ id, label, lead, children, className }) {
   return (
     // Anchor offset comes from `scroll-padding-top` on <html>; adding
     // scroll-margin here too would stack and land sections 192px down.
-    <section id={id} className={cn("py-14 sm:py-16", className)}>
+    <section id={id} className={cn("py-8 sm:py-10", className)}>
       <Reveal>
         <div className="flex items-center gap-4">
           <h2 className="section-label shrink-0">{label}</h2>

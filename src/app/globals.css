@@ -13,7 +13,6 @@
   --text-faint: #a1a1aa;
   --border: rgb(24 24 27 / 0.1);
   --border-strong: rgb(24 24 27 / 0.18);
-  --accent: #b45309;
   --glow: rgb(24 24 27 / 0.05);
   --shadow-card: 0 1px 2px rgb(24 24 27 / 0.04), 0 8px 24px -12px rgb(24 24 27 / 0.12);
 }
@@ -27,7 +26,6 @@
   --text-faint: #5a5a61;
   --border: rgb(237 235 232 / 0.1);
   --border-strong: rgb(237 235 232 / 0.2);
-  --accent: #e8b45f;
   --glow: rgb(237 235 232 / 0.06);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
 }
@@ -41,7 +39,6 @@
   --color-faint: var(--text-faint);
   --color-line: var(--border);
   --color-line-strong: var(--border-strong);
-  --color-accent: var(--accent);
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
@@ -68,6 +65,20 @@
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* Tailwind v4's reset dropped the browser default `cursor: pointer` on
+     buttons, so anything clickable has to ask for it back. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for],
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
   }
 
   ::selection {

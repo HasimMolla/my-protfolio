@@ -83,7 +83,9 @@ export function FlipPortrait() {
             />
           </a>
 
-          <ul className="mt-auto flex items-center gap-2 pt-3" role="list">
+          {/* Four icons have to fit a 128px-wide card on mobile, so these run
+              tighter than the pills elsewhere. */}
+          <ul className="mt-auto flex items-center gap-1.5 pt-3" role="list">
             {socials.map((social) => (
               <li key={social.label}>
                 <a
@@ -91,9 +93,9 @@ export function FlipPortrait() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="grid size-6 place-items-center rounded-full border border-line text-muted transition-colors hover:border-line-strong hover:text-text"
+                  className="grid size-5 place-items-center rounded-full border border-line text-muted transition-colors hover:border-line-strong hover:text-text"
                 >
-                  <BrandIcon name={social.brand} className="size-3" />
+                  <BrandIcon name={social.brand} className="size-2.5" />
                 </a>
               </li>
             ))}

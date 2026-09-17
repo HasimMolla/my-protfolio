@@ -40,11 +40,7 @@ export function CopyEmail({ email, className = "" }) {
             transition={{ duration: 0.18 }}
             className="absolute inset-0 grid place-items-center"
           >
-            {copied ? (
-              <Check size={14} className="text-emerald-500" />
-            ) : (
-              <Copy size={14} />
-            )}
+            {copied ? <Check size={14} className="text-text" /> : <Copy size={14} />}
           </motion.span>
         </AnimatePresence>
       </span>

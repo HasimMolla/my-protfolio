@@ -26,6 +26,12 @@ export const socials = [
     brand: "linkedin",
   },
   {
+    label: "X",
+    handle: "@_its_hasim786",
+    href: "https://x.com/_its_hasim786",
+    brand: "x",
+  },
+  {
     label: "Peerlist",
     handle: "@hasimmolla",
     href: "https://peerlist.io/hasimmolla",
@@ -66,6 +72,8 @@ export const experience = [
     type: "Full-time",
     period: "Aug 2023 — Present",
     start: "2023",
+    // Drives the live dot on the timeline. Set false when a role ends.
+    current: true,
     summary:
       "Lead frontend on client products across EdTech, PropTech and Healthcare — taking each one from an empty repository to something people use daily.",
     highlights: [
