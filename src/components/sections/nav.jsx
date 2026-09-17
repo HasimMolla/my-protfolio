@@ -73,7 +73,7 @@ export function Nav() {
             // Always above the fold and the usual LCP element.
             preload
             loading="eager"
-            className="signature-ink h-5 w-auto sm:h-8"
+            className="signature-ink h-8 w-auto sm:h-10"
           />
         </a>
 

@@ -7,7 +7,7 @@ export const site = {
   role: "Software Developer",
   location: "Kolkata, India",
   email: "mhasim790@gmail.com",
-  url: "https://mollahasim.com",
+  url: "https://hasimmolla.com",
   tagline:
     "Software developer building web products with React and Next.js — and picking up whatever a problem actually calls for.",
 };
