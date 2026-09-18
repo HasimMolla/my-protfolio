@@ -1,22 +1,20 @@
 import { site } from "@/lib/data";
 import { PageHeader, PageTitle } from "@/components/ui/page-header";
-import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import {
-  ButtonDemo,
-  SpringDemo,
-  StaggerDemo,
-  TabsDemo,
-} from "@/components/playground/demos";
+  ComponentsPreview,
+  PlaygroundCard,
+  SignaturePreview,
+} from "@/components/playground/playground-card";
 
 export const metadata = {
   title: "Playground",
   description:
-    "Live component demos and interaction experiments — each one editable in the browser, with its source.",
+    "Interactive things — a signature wall you can draw on, and live component demos you can edit in the browser.",
   alternates: { canonical: "/playground" },
   openGraph: {
     title: `Playground — ${site.name}`,
-    description: "Components and interaction experiments you can actually poke at.",
+    description: "Things you can actually poke at.",
     url: `${site.url}/playground`,
   },
 };
@@ -28,36 +26,32 @@ export default function PlaygroundPage() {
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
         <PageTitle
           title="Playground."
-          lead="Bits I build to work something out. Every demo is live — change the controls and the preview changes with them."
+          lead="Things I build to work something out. Everything here is live — open one and start clicking."
         />
 
-        <Section
-          label="Components"
-          lead="Pieces from the same toolkit as Nirmaan UI, with their props wired to real controls."
-        >
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Reveal className="h-full">
-              <ButtonDemo />
-            </Reveal>
-            <Reveal delay={0.08} className="h-full">
-              <TabsDemo />
-            </Reveal>
-          </div>
-        </Section>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <Reveal className="h-full">
+            <PlaygroundCard
+              href="/wall"
+              title="Signature wall"
+              description="Draw your own signature with a mouse, finger or stylus. It joins the wall, replayed exactly the way you drew it."
+              meta="Interactive"
+            >
+              <SignaturePreview />
+            </PlaygroundCard>
+          </Reveal>
 
-        <Section
-          label="Experiments"
-          lead="Motion, mostly. The fastest way to understand a spring is to drag its numbers around."
-        >
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Reveal className="h-full">
-              <SpringDemo />
-            </Reveal>
-            <Reveal delay={0.08} className="h-full">
-              <StaggerDemo />
-            </Reveal>
-          </div>
-        </Section>
+          <Reveal delay={0.08} className="h-full">
+            <PlaygroundCard
+              href="/playground/components"
+              title="Components"
+              description="Buttons, tabs and motion experiments with their props wired to real controls. Change a setting, watch the preview change, copy the source."
+              meta="Live demos"
+            >
+              <ComponentsPreview />
+            </PlaygroundCard>
+          </Reveal>
+        </div>
       </main>
     </>
   );

@@ -45,18 +45,20 @@ export const socials = [
 /** The subset shown in the hero's social row. */
 export const heroSocials = socials.filter((social) => social.inHero !== false);
 
+// In-page anchors. Projects is deliberately absent — it has its own route now.
 export const nav = [
   { label: "Work", href: "#work" },
   { label: "Stack", href: "#stack" },
-  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 
 // Standalone pages. Separate from `nav` because those are in-page anchors and
-// these are routes — the scroll-spy only tracks the anchors.
-// Add { label: "Wall", href: "/wall" } once the signature-wall branch lands —
-// it isn't on this branch, so linking it here would 404.
-export const routes = [{ label: "Playground", href: "/playground" }];
+// these are real routes — the scroll-spy only tracks the anchors, so these
+// never take the active pill.
+export const routes = [
+  { label: "Projects", href: "/projects" },
+  { label: "Playground", href: "/playground" },
+];
 
 // `href` points at each tool's own site — the chips are outbound links.
 export const stack = [
@@ -145,6 +147,7 @@ export const projects = [
   {
     name: "Nirmaan UI",
     year: "2025",
+    featured: true,
     image: "/assets/project/nirmaan-ui.jpg",
     description:
       "A component library built on shadcn/ui and Tailwind. Copy-paste blocks for people who would rather ship than re-solve the same layout problem every project.",
@@ -154,7 +157,7 @@ export const projects = [
   },
 ];
 
-/** The landing page shows only these; /projects shows everything. */
+/** The landing page shows these two; /projects adds the client work. */
 export const featuredProjects = projects.filter((project) => project.featured);
 
 // Client work from Martian Corporation. No links or screenshots — these ship
