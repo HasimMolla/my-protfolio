@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowLeft, Check, PenLine, Trash2, Type } from "lucide-react";
+import { ArrowLeft, Check, PenLine, RotateCcw, Trash2, Type } from "lucide-react";
 import { site } from "@/lib/data";
 import {
   NAME_MAX,
@@ -18,72 +18,94 @@ import {
   subscribeSignatures,
 } from "@/lib/signatures";
 import { SignaturePad, strokesToPathData } from "@/components/wall/signature-pad";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { Reveal } from "@/components/ui/reveal";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useHydrated } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 function SignatureCard({ entry, onRemove }) {
   const reduced = useReducedMotion();
+  // Bumping this remounts the path, which restarts the draw-on animation.
+  const [replay, setReplay] = useState(0);
+  const isDrawn = entry.kind !== "typed";
 
   return (
-    <li className="group relative">
-      <figure className="flex h-full flex-col rounded-xl border border-line bg-surface p-3 transition-colors hover:border-line-strong">
-        <div className="grid flex-1 place-items-center">
-          {entry.kind === "typed" ? (
-            <p className="px-2 py-4 text-center font-serif text-2xl text-text italic">
-              {entry.text}
-            </p>
-          ) : (
-            <svg
-              viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
-              className="h-24 w-full text-text"
-              aria-hidden="true"
+    <li>
+      <SpotlightCard className="group/card relative h-full" radius={260}>
+        <figure className="flex h-full flex-col p-3">
+          <div className="grid flex-1 place-items-center">
+            {isDrawn ? (
+              <svg
+                viewBox={`0 0 ${VIEWBOX.width} ${VIEWBOX.height}`}
+                className="h-24 w-full text-text"
+                aria-hidden="true"
+              >
+                <motion.path
+                  key={replay}
+                  d={entry.path}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={entry.weight ?? 3.2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  // A genuine stroke draw-on — the whole point of storing these
+                  // as paths rather than images.
+                  initial={reduced ? false : { pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+                  transition={{ duration: 1.1, ease: [0.33, 0.9, 0.35, 1] }}
+                />
+              </svg>
+            ) : (
+              <p className="px-2 py-4 text-center font-serif text-2xl text-text italic">
+                {entry.text}
+              </p>
+            )}
+          </div>
+
+          <figcaption className="mt-2 flex items-baseline justify-between gap-2 border-t border-line pt-2">
+            <span className="truncate text-[0.8125rem] text-muted">
+              {entry.name || "Anonymous"}
+            </span>
+            <time
+              dateTime={entry.createdAt}
+              className="shrink-0 font-mono text-[0.625rem] tracking-wide text-faint"
+              suppressHydrationWarning
             >
-              <motion.path
-                d={entry.path}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                // A genuine stroke draw-on — the whole point of storing these as
-                // paths rather than images.
-                initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-                transition={{ duration: 1.1, ease: [0.33, 0.9, 0.35, 1] }}
-              />
-            </svg>
-          )}
+              {new Date(entry.createdAt).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "short",
+              })}
+            </time>
+          </figcaption>
+        </figure>
+
+        <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover/card:opacity-100">
+          {isDrawn && !reduced ? (
+            <button
+              type="button"
+              onClick={() => setReplay((n) => n + 1)}
+              aria-label={`Replay signature by ${entry.name || "Anonymous"}`}
+              title="Replay"
+              className="grid size-6 place-items-center rounded-full bg-bg-subtle text-faint transition-colors hover:text-text"
+            >
+              <RotateCcw size={12} />
+            </button>
+          ) : null}
+          {onRemove ? (
+            <button
+              type="button"
+              onClick={() => onRemove(entry.id)}
+              aria-label={`Remove signature by ${entry.name || "Anonymous"}`}
+              title="Remove"
+              className="grid size-6 place-items-center rounded-full bg-bg-subtle text-faint transition-colors hover:text-text"
+            >
+              <Trash2 size={12} />
+            </button>
+          ) : null}
         </div>
-
-        <figcaption className="mt-2 flex items-baseline justify-between gap-2 border-t border-line pt-2">
-          <span className="truncate text-[0.8125rem] text-muted">
-            {entry.name || "Anonymous"}
-          </span>
-          <time
-            dateTime={entry.createdAt}
-            className="shrink-0 font-mono text-[0.625rem] tracking-wide text-faint"
-            suppressHydrationWarning
-          >
-            {new Date(entry.createdAt).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-            })}
-          </time>
-        </figcaption>
-      </figure>
-
-      {onRemove ? (
-        <button
-          type="button"
-          onClick={() => onRemove(entry.id)}
-          aria-label={`Remove signature by ${entry.name || "Anonymous"}`}
-          className="absolute top-2 right-2 grid size-6 place-items-center rounded-full bg-bg-subtle text-faint opacity-0 transition-all hover:text-text focus-visible:opacity-100 group-hover:opacity-100"
-        >
-          <Trash2 size={12} />
-        </button>
-      ) : null}
+      </SpotlightCard>
     </li>
   );
 }
@@ -98,6 +120,7 @@ export function SignatureWall() {
   // The pad owns its own stroke state, so clearing ours doesn't reach it —
   // bumping this key remounts it empty after a signature is added.
   const [padKey, setPadKey] = useState(0);
+  const [weight, setWeight] = useState(3.2);
 
   // The wall lives in localStorage, which is an external store — subscribing to
   // it beats loading it in an effect, and keeps other tabs in sync for free.
@@ -128,7 +151,7 @@ export function SignatureWall() {
 
     const entry =
       mode === "draw"
-        ? { ...base, kind: "drawn", path: strokesToPathData(strokes) }
+        ? { ...base, kind: "drawn", path: strokesToPathData(strokes), weight }
         : { ...base, kind: "typed", text: cleanName(typed) };
 
     if (mode === "draw" && !entry.path) return;
@@ -218,7 +241,11 @@ export function SignatureWall() {
 
           <div className="mt-3">
             {mode === "draw" ? (
-              <SignaturePad key={padKey} onChange={setStrokes} />
+              <SignaturePad
+                key={padKey}
+                onChange={setStrokes}
+                onWeightChange={setWeight}
+              />
             ) : (
               <div>
                 <label htmlFor="typed" className="sr-only">
@@ -275,13 +302,16 @@ export function SignatureWall() {
         </form>
 
         <section className="mt-12">
-          <div className="flex items-center gap-4">
-            <h2 className="section-label shrink-0">
-              The wall
-              {hydrated && entries.length ? ` · ${entries.length}` : ""}
-            </h2>
-            <span aria-hidden="true" className="h-px flex-1 bg-line" />
-          </div>
+          {/* Same label + hairline rule every section on the site opens with. */}
+          <Reveal>
+            <div className="flex items-center gap-4">
+              <h2 className="section-label shrink-0">
+                The wall
+                {hydrated && entries.length ? ` · ${entries.length}` : ""}
+              </h2>
+              <span aria-hidden="true" className="h-px flex-1 bg-line" />
+            </div>
+          </Reveal>
 
           {/* Empty until hydration, so the server and client agree. */}
           {!hydrated ? null : entries.length ? (

@@ -15,7 +15,13 @@ import { VIEWBOX, isBlank, roundPath, strokeToPath } from "@/lib/signatures";
  * from one code path, and setPointerCapture keeps a stroke alive if the pointer
  * leaves the box mid-flourish.
  */
-export function SignaturePad({ onChange, disabled = false }) {
+export const INK_WEIGHTS = [
+  { label: "Fine", value: 2 },
+  { label: "Medium", value: 3.2 },
+  { label: "Bold", value: 5 },
+];
+
+export function SignaturePad({ onChange, onWeightChange, disabled = false }) {
   const svgRef = useRef(null);
   const [strokes, setStrokes] = useState([]);
   const [current, setCurrent] = useState([]);
@@ -25,6 +31,7 @@ export function SignaturePad({ onChange, disabled = false }) {
   // live. Keeping the authoritative copy out of state is what lets every
   // setState below happen directly in an event handler.
   const pointsRef = useRef([]);
+  const [weight, setWeight] = useState(INK_WEIGHTS[1].value);
 
   const pointFrom = useCallback((event) => {
     const svg = svgRef.current;
@@ -124,7 +131,7 @@ export function SignaturePad({ onChange, disabled = false }) {
           <g
             fill="none"
             stroke="currentColor"
-            strokeWidth="3.2"
+            strokeWidth={weight}
             strokeLinecap="round"
             strokeLinejoin="round"
             className="text-text"
@@ -143,7 +150,7 @@ export function SignaturePad({ onChange, disabled = false }) {
         ) : null}
       </div>
 
-      <div className="mt-2 flex items-center gap-2">
+      <div className="mt-2 flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={undo}
@@ -162,6 +169,39 @@ export function SignaturePad({ onChange, disabled = false }) {
           <Eraser size={13} />
           Clear
         </button>
+
+        {/* Ink weight. Chosen before or after drawing — the pad restrokes live,
+            and the value travels with the saved signature. */}
+        <div
+          role="group"
+          aria-label="Ink weight"
+          className="ml-auto flex items-center gap-1 rounded-full border border-line p-0.5"
+        >
+          {INK_WEIGHTS.map((ink) => (
+            <button
+              key={ink.label}
+              type="button"
+              onClick={() => {
+                setWeight(ink.value);
+                onWeightChange?.(ink.value);
+              }}
+              aria-pressed={weight === ink.value}
+              title={ink.label}
+              className={`grid size-7 place-items-center rounded-full transition-colors ${
+                weight === ink.value
+                  ? "bg-bg-subtle text-text"
+                  : "text-faint hover:text-text"
+              }`}
+            >
+              <span
+                aria-hidden="true"
+                className="rounded-full bg-current"
+                style={{ width: ink.value * 2.2, height: ink.value * 2.2 }}
+              />
+              <span className="sr-only">{ink.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
