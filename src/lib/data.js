@@ -36,8 +36,14 @@ export const socials = [
     handle: "@hasimmolla",
     href: "https://peerlist.io/hasimmolla",
     brand: "peerlist",
+    // The hero keeps a tight row of three; Peerlist still appears in the
+    // contact card, the flip card and the footer.
+    inHero: false,
   },
 ];
+
+/** The subset shown in the hero's social row. */
+export const heroSocials = socials.filter((social) => social.inHero !== false);
 
 export const nav = [
   { label: "Work", href: "#work" },
@@ -45,6 +51,12 @@ export const nav = [
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
+
+// Standalone pages. Separate from `nav` because those are in-page anchors and
+// these are routes — the scroll-spy only tracks the anchors.
+// Add { label: "Wall", href: "/wall" } once the signature-wall branch lands —
+// it isn't on this branch, so linking it here would 404.
+export const routes = [{ label: "Playground", href: "/playground" }];
 
 // `href` points at each tool's own site — the chips are outbound links.
 export const stack = [
@@ -123,6 +135,7 @@ export const projects = [
   {
     name: "MyPYQBuddy",
     year: "2026",
+    featured: true,
     image: "/assets/project/mypyqbuddy.jpg",
     description:
       "Exam prep for India's life-science entrance tests. Real previous-year questions, AI explanations that break down the concept instead of the answer, and analytics that point at the topics you keep losing marks on.",
@@ -138,6 +151,47 @@ export const projects = [
     tech: ["nextjs", "typescript", "tailwind", "shadcn"],
     live: "https://nirmaan-ui.vercel.app",
     source: "https://github.com/HasimMolla/Nirmaan-ui",
+  },
+];
+
+/** The landing page shows only these; /projects shows everything. */
+export const featuredProjects = projects.filter((project) => project.featured);
+
+// Client work from Martian Corporation. No links or screenshots — these ship
+// behind client logins, so they're described rather than demoed.
+export const clientWork = [
+  {
+    name: "EV charging platform",
+    domain: "Mobility",
+    year: "2026",
+    current: true,
+    description:
+      "Live charging-station tracking, charging-session monitoring, fleet management and related mobility services.",
+    tech: ["nextjs", "react", "tailwind", "redux"],
+  },
+  {
+    name: "EdTech LMS",
+    domain: "Education",
+    year: "2025",
+    description:
+      "Learning platform with lead tracking and course-progress reporting for both learners and admins.",
+    tech: ["react", "nextjs", "redux", "tailwind"],
+  },
+  {
+    name: "PropTech CRM",
+    domain: "Real estate",
+    year: "2024",
+    description:
+      "Property analytics, payment flows and role-based dashboards for sales teams.",
+    tech: ["react", "nextjs", "typescript", "tailwind"],
+  },
+  {
+    name: "Hospital management system",
+    domain: "Healthcare",
+    year: "2024",
+    description:
+      "Appointments, doctor scheduling and patient records, built for daily clinical use.",
+    tech: ["react", "nextjs", "redux"],
   },
 ];
 

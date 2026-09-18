@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { nav, site } from "@/lib/data";
+import { nav, routes, site } from "@/lib/data";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { cn } from "@/lib/utils";
 
@@ -103,6 +104,18 @@ export function Nav() {
               </a>
             );
           })}
+
+          {/* Real routes, not anchors — kept outside the scroll-spy list above
+              so they never take the active pill. */}
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className="shrink-0 rounded-full px-2 py-1.5 text-xs text-muted transition-colors hover:text-text sm:px-3 sm:text-[0.8125rem]"
+            >
+              {route.label}
+            </Link>
+          ))}
         </nav>
 
         <ThemeToggle className="shrink-0" />

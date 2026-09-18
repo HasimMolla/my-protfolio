@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { MapPin, Mail, ArrowUpRight } from "lucide-react";
-import { linkPreviews, site, socials } from "@/lib/data";
+import { heroSocials, linkPreviews, site } from "@/lib/data";
 import { TextReveal } from "@/components/ui/text-reveal";
 import { Reveal } from "@/components/ui/reveal";
 import { LinkPreview } from "@/components/ui/link-preview";
@@ -128,7 +128,7 @@ export function Hero() {
 
       <Reveal delay={0.5}>
         <ul className="mt-5 flex flex-wrap items-center gap-2">
-          {socials.map((social) => (
+          {heroSocials.map((social) => (
             <li key={social.label}>
               <a
                 href={social.href}
