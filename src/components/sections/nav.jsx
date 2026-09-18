@@ -90,7 +90,18 @@ export function Nav() {
         </Link>
 
         {/* Small screens get the menu below instead of a cramped scroller. */}
+
+        
         <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1 sm:flex">
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className="shrink-0 rounded-full px-2 py-1.5 text-xs text-muted transition-colors hover:text-text sm:px-3 sm:text-[0.8125rem]"
+            >
+              <span className="link-underline">{route.label}</span>
+            </Link>
+          ))}
           {nav.map((item) => {
             const id = item.href.slice(1);
             const isActive = isHome && active === id;
@@ -100,6 +111,8 @@ export function Nav() {
               // the browser honours the hash. Routing this through <Link>
               // left you at the top of the page, because Next's scroll-to-top
               // runs after the router commits the new URL.
+
+              
               <a
                 key={item.href}
                 href={isHome ? item.href : `/${item.href}`}
@@ -116,22 +129,16 @@ export function Nav() {
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 ) : null}
-                {item.label}
+                {/* Inner span so the underline tracks the text, not the pill's
+                    padding box — same treatment as the contact links. */}
+                <span className="link-underline">{item.label}</span>
               </a>
             );
           })}
 
           {/* Real routes, not anchors — kept outside the scroll-spy list above
               so they never take the active pill. */}
-          {routes.map((route) => (
-            <Link
-              key={route.href}
-              href={route.href}
-              className="shrink-0 rounded-full px-2 py-1.5 text-xs text-muted transition-colors hover:text-text sm:px-3 sm:text-[0.8125rem]"
-            >
-              {route.label}
-            </Link>
-          ))}
+          
         </nav>
 
         {/* Pushes the controls right once the link row is hidden. */}

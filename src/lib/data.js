@@ -47,8 +47,6 @@ export const heroSocials = socials.filter((social) => social.inHero !== false);
 
 // In-page anchors. Projects is deliberately absent — it has its own route now.
 export const nav = [
-  { label: "Work", href: "#work" },
-  { label: "Stack", href: "#stack" },
   { label: "Contact", href: "#contact" },
 ];
 

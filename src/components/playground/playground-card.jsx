@@ -69,23 +69,58 @@ export function SignaturePreview() {
 
 /** Preview for components: miniature versions of what's on the page. */
 export function ComponentsPreview() {
+  const reduced = useReducedMotion();
+  // One shared cycle so the three rows read as a set rather than three
+  // unrelated loops. repeatType "reverse" means each returns the way it came.
+  const loop = (extra = {}) =>
+    reduced
+      ? undefined
+      : {
+          duration: 1.6,
+          repeat: Infinity,
+          repeatType: "reverse",
+          repeatDelay: 0.5,
+          ease: [0.22, 1, 0.36, 1],
+          ...extra,
+        };
+
   return (
-    <div className="flex w-full max-w-[13rem] flex-col items-center gap-2.5">
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-text px-3 py-1.5 text-[0.6875rem] font-medium text-bg">
+    <div className="flex w-full max-w-[13rem] flex-col items-center gap-3">
+      {/* Button — a press that never quite lands. */}
+      <motion.span
+        animate={reduced ? undefined : { scale: [1, 0.94] }}
+        transition={loop()}
+        className="inline-flex items-center gap-1.5 rounded-full bg-text px-3 py-1.5 text-[0.6875rem] font-medium text-bg"
+      >
         Get started
-      </span>
-      <div className="flex w-full items-center gap-1 rounded-full border border-line bg-surface p-1">
-        <span className="flex-1 rounded-full bg-text px-2 py-1 text-center text-[0.625rem] text-bg">
-          Overview
-        </span>
-        <span className="flex-1 px-2 py-1 text-center text-[0.625rem] text-muted">
-          Activity
-        </span>
+      </motion.span>
+
+      {/* Toggle — knob slides, track fills behind it. */}
+      <div className="flex w-full items-center justify-between gap-3">
+        <span className="text-[0.625rem] text-muted">Toggle</span>
+        <motion.span
+          animate={reduced ? undefined : { backgroundColor: ["var(--border)", "var(--text)"] }}
+          transition={loop()}
+          className="relative flex h-4 w-7 shrink-0 items-center rounded-full px-0.5"
+        >
+          <motion.span
+            animate={reduced ? undefined : { x: [0, 12] }}
+            transition={loop()}
+            className="size-3 rounded-full bg-surface shadow-sm"
+          />
+        </motion.span>
       </div>
+
+      {/* Slider — the handle walks the track. */}
       <div className="flex w-full items-center gap-2">
-        <span className="h-1 flex-1 rounded-full bg-line" />
-        <span className="size-2.5 rounded-full bg-text" />
-        <span className="h-1 flex-1 rounded-full bg-line" />
+        <span className="text-[0.625rem] text-muted">Range</span>
+        <span className="relative flex h-1 flex-1 items-center rounded-full bg-line">
+          <motion.span
+            animate={reduced ? undefined : { left: ["0%", "100%"] }}
+            transition={loop({ duration: 2 })}
+            className="absolute size-2.5 -translate-x-1/2 rounded-full bg-text"
+          />
+        </span>
       </div>
     </div>
   );
