@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Nav } from "@/components/sections/nav";
 import { site } from "@/lib/data";
 import "./globals.css";
 
@@ -73,7 +74,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {/* One nav for every route — it adapts its links off the landing page. */}
+          <Nav />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

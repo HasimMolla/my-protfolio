@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { site } from "@/lib/data";
-import { PageHeader, PageTitle } from "@/components/ui/page-header";
+import { PageTitle } from "@/components/ui/page-title";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import {
@@ -25,21 +23,8 @@ export const metadata = {
 
 export default function ComponentsPage() {
   return (
-    <>
-      <PageHeader />
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
-        <Link
-          href="/playground"
-          className="group inline-flex items-center gap-1.5 text-[0.8125rem] text-muted transition-colors hover:text-text"
-        >
-          <ArrowLeft
-            size={13}
-            className="transition-transform duration-300 group-hover:-translate-x-0.5"
-          />
-          Playground
-        </Link>
-
-        <div className="mt-5">
+        <div>
           <PageTitle
             title="Components."
             lead="Pieces from the same toolkit as Nirmaan UI, with their props wired to real controls. Change a setting and the preview changes with it."
@@ -71,6 +56,5 @@ export default function ComponentsPage() {
           </div>
         </Section>
       </main>
-    </>
   );
 }

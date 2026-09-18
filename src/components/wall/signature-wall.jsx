@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowLeft, Check, PenLine, RotateCcw, Trash2, Type } from "lucide-react";
+import { Check, PenLine, RotateCcw, Trash2, Type } from "lucide-react";
 import { site } from "@/lib/data";
 import {
   NAME_MAX,
@@ -20,7 +19,6 @@ import {
 import { SignaturePad, strokesToPathData } from "@/components/wall/signature-pad";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Reveal } from "@/components/ui/reveal";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useHydrated } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
@@ -170,22 +168,6 @@ export function SignatureWall() {
 
   return (
     <>
-      <div className="sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md">
-        <div className="mx-auto flex h-16 w-full max-w-3xl items-center justify-between gap-3 px-4 sm:px-8">
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-2 text-[0.8125rem] text-muted transition-colors hover:text-text"
-          >
-            <ArrowLeft
-              size={14}
-              className="transition-transform duration-300 group-hover:-translate-x-0.5"
-            />
-            Portfolio
-          </Link>
-          <ThemeToggle />
-        </div>
-      </div>
-
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
         <header>
           <h1 className="text-[2rem] leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[2.4rem]">

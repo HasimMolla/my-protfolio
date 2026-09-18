@@ -1,5 +1,5 @@
 import { site } from "@/lib/data";
-import { PageHeader, PageTitle } from "@/components/ui/page-header";
+import { PageTitle } from "@/components/ui/page-title";
 import { Reveal } from "@/components/ui/reveal";
 import {
   ComponentsPreview,
@@ -21,8 +21,6 @@ export const metadata = {
 
 export default function PlaygroundPage() {
   return (
-    <>
-      <PageHeader />
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
         <PageTitle
           title="Playground."
@@ -53,6 +51,5 @@ export default function PlaygroundPage() {
           </Reveal>
         </div>
       </main>
-    </>
   );
 }

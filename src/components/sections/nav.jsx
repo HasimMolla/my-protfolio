@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { nav, routes, site } from "@/lib/data";
@@ -9,6 +10,11 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { cn } from "@/lib/utils";
 
 export function Nav() {
+  const pathname = usePathname();
+  // The section anchors only exist on the landing page. Everywhere else they
+  // have to become "/#work" so they route home first, and the scroll-spy has
+  // nothing to watch.
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
 
@@ -20,6 +26,8 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
+    if (!isHome) return;
+
     const sections = nav
       .map((item) => document.getElementById(item.href.slice(1)))
       .filter(Boolean)
@@ -49,7 +57,7 @@ export function Nav() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
   return (
     <header
@@ -61,9 +69,9 @@ export function Nav() {
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-3xl items-center gap-1 px-4 sm:gap-4 sm:px-8">
-        <a
-          href="#top"
-          aria-label={`${site.name} — back to top`}
+        <Link
+          href={isHome ? "#top" : "/"}
+          aria-label={isHome ? `${site.name} — back to top` : `${site.name} — home`}
           className="shrink-0 transition-opacity hover:opacity-60"
         >
           <Image
@@ -76,17 +84,22 @@ export function Nav() {
             loading="eager"
             className="signature-ink h-8 w-auto sm:h-10"
           />
-        </a>
+        </Link>
 
         {/* Links scroll rather than push the page wide on narrow screens. */}
         <nav className="flex min-w-0 flex-1 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] sm:gap-1 [&::-webkit-scrollbar]:hidden">
           {nav.map((item) => {
             const id = item.href.slice(1);
-            const isActive = active === id;
+            const isActive = isHome && active === id;
             return (
+              // Deliberately a plain <a>, not <Link>. In-page it scrolls
+              // natively; off the landing page it does a full navigation and
+              // the browser honours the hash. Routing this through <Link>
+              // left you at the top of the page, because Next's scroll-to-top
+              // runs after the router commits the new URL.
               <a
                 key={item.href}
-                href={item.href}
+                href={isHome ? item.href : `/${item.href}`}
                 className={cn(
                   "relative shrink-0 rounded-full px-2 py-1.5 text-xs transition-colors sm:px-3 sm:text-[0.8125rem]",
                   isActive ? "text-text" : "text-muted hover:text-text",

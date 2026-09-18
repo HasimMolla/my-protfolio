@@ -90,30 +90,3 @@ export function ProjectCard({ project }) {
   );
 }
 
-/**
- * Client work. No screenshot and no link — these live behind client logins, so
- * the card leans on the description instead of pretending there's something to
- * click.
- */
-export function ClientWorkCard({ item }) {
-  return (
-    <SpotlightCard className="flex h-full flex-col p-4">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="truncate text-[0.95rem] font-semibold tracking-[-0.01em]">
-          {item.name}
-        </h3>
-        {item.current ? (
-          <span className="section-label shrink-0">Current</span>
-        ) : null}
-      </div>
-
-      <p className="mt-0.5 text-[0.75rem] text-faint">{item.domain}</p>
-
-      <p className="mt-2.5 text-pretty text-[0.8125rem] leading-relaxed text-muted">
-        {item.description}
-      </p>
-
-      <TechRow tech={item.tech} trailing={item.year} />
-    </SpotlightCard>
-  );
-}

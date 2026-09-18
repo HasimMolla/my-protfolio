@@ -1,4 +1,3 @@
-import { Nav } from "@/components/sections/nav";
 import { Hero } from "@/components/sections/hero";
 import { Stack } from "@/components/sections/stack";
 import { Experience } from "@/components/sections/experience";
@@ -24,7 +23,6 @@ export default function Home() {
   return (
     <>
       <CursorGlow />
-      <Nav />
       <main className="relative z-10 mx-auto w-full max-w-3xl px-5 sm:px-8">
         <Hero />
         <Stack />

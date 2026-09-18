@@ -160,44 +160,6 @@ export const projects = [
 /** The landing page shows these two; /projects adds the client work. */
 export const featuredProjects = projects.filter((project) => project.featured);
 
-// Client work from Martian Corporation. No links or screenshots — these ship
-// behind client logins, so they're described rather than demoed.
-export const clientWork = [
-  {
-    name: "EV charging platform",
-    domain: "Mobility",
-    year: "2026",
-    current: true,
-    description:
-      "Live charging-station tracking, charging-session monitoring, fleet management and related mobility services.",
-    tech: ["nextjs", "react", "tailwind", "redux"],
-  },
-  {
-    name: "EdTech LMS",
-    domain: "Education",
-    year: "2025",
-    description:
-      "Learning platform with lead tracking and course-progress reporting for both learners and admins.",
-    tech: ["react", "nextjs", "redux", "tailwind"],
-  },
-  {
-    name: "PropTech CRM",
-    domain: "Real estate",
-    year: "2024",
-    description:
-      "Property analytics, payment flows and role-based dashboards for sales teams.",
-    tech: ["react", "nextjs", "typescript", "tailwind"],
-  },
-  {
-    name: "Hospital management system",
-    domain: "Healthcare",
-    year: "2024",
-    description:
-      "Appointments, doctor scheduling and patient records, built for daily clinical use.",
-    tech: ["react", "nextjs", "redux"],
-  },
-];
-
 // Screenshots used by the hover link previews in the intro copy.
 export const linkPreviews = {
   "nirmaan-ui": {
