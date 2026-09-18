@@ -5,8 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { Menu } from "lucide-react";
 import { nav, routes, site } from "@/lib/data";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { MobileMenu } from "@/components/sections/mobile-menu";
 import { cn } from "@/lib/utils";
 
 export function Nav() {
@@ -17,6 +19,7 @@ export function Nav() {
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -86,8 +89,8 @@ export function Nav() {
           />
         </Link>
 
-        {/* Links scroll rather than push the page wide on narrow screens. */}
-        <nav className="flex min-w-0 flex-1 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] sm:gap-1 [&::-webkit-scrollbar]:hidden">
+        {/* Small screens get the menu below instead of a cramped scroller. */}
+        <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1 sm:flex">
           {nav.map((item) => {
             const id = item.href.slice(1);
             const isActive = isHome && active === id;
@@ -131,8 +134,28 @@ export function Nav() {
           ))}
         </nav>
 
-        <ThemeToggle className="shrink-0" />
+        {/* Pushes the controls right once the link row is hidden. */}
+        <div className="flex flex-1 items-center justify-end gap-1 sm:flex-none">
+          <ThemeToggle className="shrink-0" />
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            className="grid size-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-bg-subtle hover:text-text sm:hidden"
+          >
+            <Menu size={17} />
+          </button>
+        </div>
       </div>
+
+      <MobileMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        isHome={isHome}
+        active={active}
+      />
     </header>
   );
 }

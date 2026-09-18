@@ -9,12 +9,12 @@ import { ArrowLeft } from "lucide-react";
 export function PageTitle({ title, lead }) {
   return (
     <header>
-      <h1 className="text-[1.5rem] leading-snug tracking-[-0.02em] text-balance sm:text-[1.75rem]">
+      <h1 className="text-[1.1rem] leading-snug tracking-[-0.02em] text-balance sm:text-[1.4rem]">
         <span className="font-semibold">{title}</span>
         {lead ? (
           <>
             <span className="text-muted">, </span>
-            <span className="font-serif text-[1.1em] text-muted italic">
+            <span className="font-serif text-[1em] text-muted italic">
               {lead}
             </span>
           </>
@@ -38,7 +38,7 @@ export function Breadcrumb({ trail, title, lead }) {
         <Link
           href={parent.href}
           aria-label={`Back to ${parent.label}`}
-          className="group mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border border-line text-muted transition-colors hover:border-line-strong hover:bg-bg-subtle hover:text-text"
+          className="group mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border border-line text-muted transition-colors hover:border-line-strong hover:bg-bg-subtle hover:text-text "
         >
           <ArrowLeft
             size={15}

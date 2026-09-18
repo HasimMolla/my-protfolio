@@ -179,14 +179,6 @@ export function SignatureWall() {
           lead="this whole site is built on one handwritten mark — here's the pen."
         />
 
-        <Image
-          src="/assets/signature.png"
-          alt={`${site.name}'s signature`}
-          width={1200}
-          height={389}
-          loading="eager"
-          className="signature-ink mt-6 h-10 w-auto opacity-80"
-        />
 
         <form onSubmit={handleSubmit} className="mt-9">
           <div className="flex items-center justify-between gap-3">
