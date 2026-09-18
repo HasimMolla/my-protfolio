@@ -20,6 +20,11 @@ export function SignaturePad({ onChange, disabled = false }) {
   const [strokes, setStrokes] = useState([]);
   const [current, setCurrent] = useState([]);
   const drawing = useRef(false);
+  // The in-progress stroke is held in a ref as well as state. The ref is what
+  // the handlers read and write; the state exists only so the stroke renders
+  // live. Keeping the authoritative copy out of state is what lets every
+  // setState below happen directly in an event handler.
+  const pointsRef = useRef([]);
 
   const pointFrom = useCallback((event) => {
     const svg = svgRef.current;
@@ -47,31 +52,35 @@ export function SignaturePad({ onChange, disabled = false }) {
     if (!point) return;
     drawing.current = true;
     event.currentTarget.setPointerCapture?.(event.pointerId);
-    setCurrent([point]);
+    pointsRef.current = [point];
+    setCurrent(pointsRef.current);
   }
 
   function handleMove(event) {
     if (!drawing.current) return;
     const point = pointFrom(event);
     if (!point) return;
-    setCurrent((points) => {
-      const last = points[points.length - 1];
-      // Drop samples that barely moved — fewer points, smoother curve.
-      if (last && Math.hypot(point.x - last.x, point.y - last.y) < 1.5) {
-        return points;
-      }
-      return [...points, point];
-    });
+    const points = pointsRef.current;
+    const last = points[points.length - 1];
+    // Drop samples that barely moved — fewer points, smoother curve.
+    if (last && Math.hypot(point.x - last.x, point.y - last.y) < 1.5) return;
+    pointsRef.current = [...points, point];
+    setCurrent(pointsRef.current);
   }
 
   function handleUp(event) {
     if (!drawing.current) return;
     drawing.current = false;
     event.currentTarget.releasePointerCapture?.(event.pointerId);
-    setCurrent((points) => {
-      if (points.length) commit([...strokes, points]);
-      return [];
-    });
+
+    // Read and reset the stroke here, in the handler. Doing this inside a
+    // setCurrent updater ran `commit` during React's render phase, which
+    // updated the parent mid-render — and StrictMode double-invokes updaters,
+    // so onChange fired twice per stroke.
+    const points = pointsRef.current;
+    pointsRef.current = [];
+    setCurrent([]);
+    if (points.length) commit([...strokes, points]);
   }
 
   function undo() {
@@ -79,6 +88,7 @@ export function SignaturePad({ onChange, disabled = false }) {
   }
 
   function clear() {
+    pointsRef.current = [];
     commit([]);
     setCurrent([]);
   }
