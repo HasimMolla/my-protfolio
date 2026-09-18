@@ -1,15 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { nav, site } from "@/lib/data";
+import { Menu } from "lucide-react";
+import { nav, routes, site } from "@/lib/data";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { MobileMenu } from "@/components/sections/mobile-menu";
 import { cn } from "@/lib/utils";
 
 export function Nav() {
+  const pathname = usePathname();
+  // The section anchors only exist on the landing page. Everywhere else they
+  // have to become "/#work" so they route home first, and the scroll-spy has
+  // nothing to watch.
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -19,6 +29,8 @@ export function Nav() {
   }, []);
 
   useEffect(() => {
+    if (!isHome) return;
+
     const sections = nav
       .map((item) => document.getElementById(item.href.slice(1)))
       .filter(Boolean)
@@ -48,7 +60,7 @@ export function Nav() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
   return (
     <header
@@ -60,9 +72,9 @@ export function Nav() {
       )}
     >
       <div className="mx-auto flex h-16 w-full max-w-3xl items-center gap-1 px-4 sm:gap-4 sm:px-8">
-        <a
-          href="#top"
-          aria-label={`${site.name} — back to top`}
+        <Link
+          href={isHome ? "#top" : "/"}
+          aria-label={isHome ? `${site.name} — back to top` : `${site.name} — home`}
           className="shrink-0 transition-opacity hover:opacity-60"
         >
           <Image
@@ -75,17 +87,35 @@ export function Nav() {
             loading="eager"
             className="signature-ink h-8 w-auto sm:h-10"
           />
-        </a>
+        </Link>
 
-        {/* Links scroll rather than push the page wide on narrow screens. */}
-        <nav className="flex min-w-0 flex-1 items-center justify-end gap-0.5 overflow-x-auto [scrollbar-width:none] sm:gap-1 [&::-webkit-scrollbar]:hidden">
+        {/* Small screens get the menu below instead of a cramped scroller. */}
+
+        
+        <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1 sm:flex">
+          {routes.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className="shrink-0 rounded-full px-2 py-1.5 text-xs text-muted transition-colors hover:text-text sm:px-3 sm:text-[0.8125rem]"
+            >
+              <span className="link-underline">{route.label}</span>
+            </Link>
+          ))}
           {nav.map((item) => {
             const id = item.href.slice(1);
-            const isActive = active === id;
+            const isActive = isHome && active === id;
             return (
+              // Deliberately a plain <a>, not <Link>. In-page it scrolls
+              // natively; off the landing page it does a full navigation and
+              // the browser honours the hash. Routing this through <Link>
+              // left you at the top of the page, because Next's scroll-to-top
+              // runs after the router commits the new URL.
+
+              
               <a
                 key={item.href}
-                href={item.href}
+                href={isHome ? item.href : `/${item.href}`}
                 className={cn(
                   "relative shrink-0 rounded-full px-2 py-1.5 text-xs transition-colors sm:px-3 sm:text-[0.8125rem]",
                   isActive ? "text-text" : "text-muted hover:text-text",
@@ -99,14 +129,40 @@ export function Nav() {
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 ) : null}
-                {item.label}
+                {/* Inner span so the underline tracks the text, not the pill's
+                    padding box — same treatment as the contact links. */}
+                <span className="link-underline">{item.label}</span>
               </a>
             );
           })}
+
+          {/* Real routes, not anchors — kept outside the scroll-spy list above
+              so they never take the active pill. */}
+          
         </nav>
 
-        <ThemeToggle className="shrink-0" />
+        {/* Pushes the controls right once the link row is hidden. */}
+        <div className="flex flex-1 items-center justify-end gap-1 sm:flex-none">
+          <ThemeToggle className="shrink-0" />
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            className="grid size-9 shrink-0 place-items-center rounded-full text-muted transition-colors hover:bg-bg-subtle hover:text-text sm:hidden"
+          >
+            <Menu size={17} />
+          </button>
+        </div>
       </div>
+
+      <MobileMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        isHome={isHome}
+        active={active}
+      />
     </header>
   );
 }

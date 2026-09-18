@@ -36,14 +36,26 @@ export const socials = [
     handle: "@hasimmolla",
     href: "https://peerlist.io/hasimmolla",
     brand: "peerlist",
+    // The hero keeps a tight row of three; Peerlist still appears in the
+    // contact card, the flip card and the footer.
+    inHero: false,
   },
 ];
 
+/** The subset shown in the hero's social row. */
+export const heroSocials = socials.filter((social) => social.inHero !== false);
+
+// In-page anchors. Projects is deliberately absent — it has its own route now.
 export const nav = [
-  { label: "Work", href: "#work" },
-  { label: "Stack", href: "#stack" },
-  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
+];
+
+// Standalone pages. Separate from `nav` because those are in-page anchors and
+// these are real routes — the scroll-spy only tracks the anchors, so these
+// never take the active pill.
+export const routes = [
+  { label: "Projects", href: "/projects" },
+  { label: "Playground", href: "/playground" },
 ];
 
 // `href` points at each tool's own site — the chips are outbound links.
@@ -123,6 +135,7 @@ export const projects = [
   {
     name: "MyPYQBuddy",
     year: "2026",
+    featured: true,
     image: "/assets/project/mypyqbuddy.jpg",
     description:
       "Exam prep for India's life-science entrance tests. Real previous-year questions, AI explanations that break down the concept instead of the answer, and analytics that point at the topics you keep losing marks on.",
@@ -132,6 +145,7 @@ export const projects = [
   {
     name: "Nirmaan UI",
     year: "2025",
+    featured: true,
     image: "/assets/project/nirmaan-ui.jpg",
     description:
       "A component library built on shadcn/ui and Tailwind. Copy-paste blocks for people who would rather ship than re-solve the same layout problem every project.",
@@ -140,6 +154,9 @@ export const projects = [
     source: "https://github.com/HasimMolla/Nirmaan-ui",
   },
 ];
+
+/** The landing page shows these two; /projects adds the client work. */
+export const featuredProjects = projects.filter((project) => project.featured);
 
 // Screenshots used by the hover link previews in the intro copy.
 export const linkPreviews = {
