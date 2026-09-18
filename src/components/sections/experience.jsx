@@ -1,6 +1,7 @@
 import { experience } from "@/lib/data";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
+import { BrandIcon, brandIcons, brandHex } from "@/components/icons/brand-icons";
 import { cn } from "@/lib/utils";
 
 export function Experience() {
@@ -8,7 +9,6 @@ export function Experience() {
     <Section
       id="work"
       label="Experience"
-      lead="Where I have been shipping, and what came out of it."
     >
       <ol className="relative space-y-10" role="list">
         {/* One continuous rail behind every entry, rather than a segment per
@@ -60,13 +60,22 @@ export function Experience() {
               ))}
             </ul>
 
-            <ul className="mt-4 flex flex-wrap gap-1.5" role="list">
-              {job.tech.map((tech) => (
+            {/* Marks rather than text chips. Muted at rest so the Stack
+                section stays the one place colour leads; each picks up its
+                brand colour on hover. */}
+            <ul className="mt-4 flex flex-wrap items-center gap-3" role="list">
+              {job.tech.map((key) => (
                 <li
-                  key={tech}
-                  className="rounded-md bg-bg-subtle px-2 py-1 font-mono text-[0.6875rem] text-muted"
+                  key={key}
+                  title={brandIcons[key]?.title}
+                  style={{
+                    "--brand": brandHex(key, true),
+                    "--brand-dark": brandHex(key, true),
+                  }}
+                  className="text-faint transition-colors duration-300 hover:text-[var(--brand)] dark:hover:text-[var(--brand-dark)]"
                 >
-                  {tech}
+                  <BrandIcon name={key} className="size-[18px]" />
+                  <span className="sr-only">{brandIcons[key]?.title}</span>
                 </li>
               ))}
             </ul>

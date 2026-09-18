@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { nav, site } from "@/lib/data";
@@ -103,6 +104,15 @@ export function Nav() {
               </a>
             );
           })}
+
+          {/* A real route rather than an anchor, so it sits outside the
+              scroll-spy list and never takes the active pill. */}
+          <Link
+            href="/resume"
+            className="ml-1 shrink-0 rounded-full border border-line px-2.5 py-1.5 text-xs text-muted transition-colors hover:border-line-strong hover:bg-bg-subtle hover:text-text sm:px-3 sm:text-[0.8125rem]"
+          >
+            Résumé
+          </Link>
         </nav>
 
         <ThemeToggle className="shrink-0" />

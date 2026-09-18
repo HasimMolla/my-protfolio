@@ -46,23 +46,51 @@ export const nav = [
   { label: "Contact", href: "#contact" },
 ];
 
+// `href` points at each tool's own site — the chips are outbound links.
 export const stack = [
-  { name: "React", brand: "react" },
-  { name: "Next.js", brand: "nextjs" },
-  { name: "TypeScript", brand: "typescript" },
-  { name: "JavaScript", brand: "javascript" },
-  { name: "Tailwind CSS", brand: "tailwind" },
-  { name: "HTML", brand: "html" },
-  { name: "CSS", brand: "css" },
-  { name: "Redux Toolkit", brand: "redux" },
-  { name: "Zustand", img: "/assets/zustand.png" },
-  { name: "TanStack Query", brand: "reactquery" },
-  { name: "Motion", brand: "motion" },
-  { name: "shadcn/ui", brand: "shadcn" },
-  { name: "Node.js", brand: "nodejs" },
-  { name: "Git", brand: "git" },
-  { name: "Figma", brand: "figma" },
-  { name: "Vercel", brand: "vercel" },
+  { name: "React", brand: "react", href: "https://react.dev" },
+  // Expo stands in for the React Native work — RN has no mark of its own, it
+  // reuses React's atom, which would read as a duplicate chip.
+  { name: "Expo", brand: "expo", href: "https://expo.dev" },
+  { name: "Next.js", brand: "nextjs", href: "https://nextjs.org" },
+  {
+    name: "TypeScript",
+    brand: "typescript",
+    href: "https://www.typescriptlang.org",
+  },
+  {
+    name: "JavaScript",
+    brand: "javascript",
+    href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+  },
+  { name: "Tailwind CSS", brand: "tailwind", href: "https://tailwindcss.com" },
+  {
+    name: "HTML",
+    brand: "html",
+    href: "https://developer.mozilla.org/en-US/docs/Web/HTML",
+  },
+  {
+    name: "CSS",
+    brand: "css",
+    href: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+  },
+  { name: "Redux Toolkit", brand: "redux", href: "https://redux-toolkit.js.org" },
+  {
+    name: "Zustand",
+    img: "/assets/zustand.png",
+    href: "https://zustand.docs.pmnd.rs",
+  },
+  {
+    name: "TanStack Query",
+    brand: "reactquery",
+    href: "https://tanstack.com/query",
+  },
+  { name: "Motion", brand: "motion", href: "https://motion.dev" },
+  { name: "shadcn/ui", brand: "shadcn", href: "https://ui.shadcn.com" },
+  { name: "Node.js", brand: "nodejs", href: "https://nodejs.org" },
+  { name: "Git", brand: "git", href: "https://git-scm.com" },
+  { name: "Figma", brand: "figma", href: "https://www.figma.com" },
+  { name: "Vercel", brand: "vercel", href: "https://vercel.com" },
 ];
 
 export const experience = [
@@ -82,7 +110,10 @@ export const experience = [
       "Delivered a hospital management system handling appointments, doctor scheduling and patient records.",
       "Worked directly with design and backend to keep API contracts and UI expectations in sync.",
     ],
-    tech: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux Toolkit", "REST APIs"],
+    // Brand-icon keys, like `projects` — rendered as marks, not text chips.
+    // "REST APIs" was dropped here: it has no logo, and the summary and
+    // highlights above already say the work was API-integration heavy.
+    tech: ["react", "nextjs", "typescript", "tailwind", "redux"],
   },
 ];
 
