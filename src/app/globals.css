@@ -206,3 +206,90 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Print. Mainly for /resume: Cmd+P should produce a clean CV, not a screenshot
+   of a website. Forces the light palette regardless of the on-screen theme,
+   drops decoration, and keeps sections from splitting across pages.
+   --------------------------------------------------------------------------- */
+@media print {
+  :root,
+  .dark {
+    --bg: #ffffff;
+    --bg-subtle: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+    --text-muted: #2b2b2b;
+    --text-faint: #595959;
+    --border: #d4d4d4;
+    --border-strong: #a3a3a3;
+    --shadow-card: none;
+  }
+
+  @page {
+    margin: 14mm 14mm 12mm;
+  }
+
+  html {
+    font-size: 11px;
+    /* next-themes writes `color-scheme: dark` as an inline style on <html>.
+       That makes the UA paint the page canvas dark, which no stylesheet
+       background can undo — printing from dark mode produced a black page
+       until this override. Inline styles need the !important to lose. */
+    color-scheme: light !important;
+    background: #ffffff !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* The signature is black ink already — never invert it onto white paper. */
+  .signature-ink,
+  .dark .signature-ink {
+    filter: none !important;
+  }
+
+  /* Decoration that only costs toner. */
+  header[class*="sticky"],
+  nav,
+  footer,
+  button {
+    display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Anything driven by motion must not print mid-animation. */
+  [style*="opacity"],
+  [style*="clip-path"] {
+    opacity: 1 !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid-page;
+  }
+
+  li,
+  article,
+  section {
+    break-inside: avoid;
+  }
+}
