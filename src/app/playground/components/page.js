@@ -1,5 +1,5 @@
 import { site } from "@/lib/data";
-import { PageTitle } from "@/components/ui/page-title";
+import { Breadcrumb } from "@/components/ui/page-title";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import {
@@ -24,12 +24,14 @@ export const metadata = {
 export default function ComponentsPage() {
   return (
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
-        <div>
-          <PageTitle
-            title="Components."
-            lead="Pieces from the same toolkit as Nirmaan UI, with their props wired to real controls. Change a setting and the preview changes with it."
-          />
-        </div>
+        <Breadcrumb
+          trail={[
+            { label: "Playground", href: "/playground" },
+            { label: "Components" },
+          ]}
+          title="Components"
+          lead="props wired to real controls — change one, watch it change."
+        />
 
         <Section label="Components">
           <div className="grid gap-4 sm:grid-cols-2">

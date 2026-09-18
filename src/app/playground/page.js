@@ -23,8 +23,8 @@ export default function PlaygroundPage() {
   return (
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
         <PageTitle
-          title="Playground."
-          lead="Things I build to work something out. Everything here is live — open one and start clicking."
+          title="Playground"
+          lead="small things I build to work something out."
         />
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">

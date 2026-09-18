@@ -17,7 +17,10 @@ export const metadata = {
 export default function ProjectsPage() {
   return (
     <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
-      <PageTitle title="Projects." />
+      <PageTitle
+        title="Projects"
+        lead="the ones I wanted to exist badly enough to build."
+      />
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {projects.map((project, index) => (

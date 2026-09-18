@@ -18,6 +18,7 @@ import {
 } from "@/lib/signatures";
 import { SignaturePad, strokesToPathData } from "@/components/wall/signature-pad";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { Breadcrumb } from "@/components/ui/page-title";
 import { Reveal } from "@/components/ui/reveal";
 import { useHydrated } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
@@ -169,24 +170,23 @@ export function SignatureWall() {
   return (
     <>
       <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-20 sm:px-8">
-        <header>
-          <h1 className="text-[2rem] leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[2.4rem]">
-            Sign the wall.
-          </h1>
-          <p className="mt-3 max-w-xl text-pretty text-[0.95rem] leading-relaxed text-muted">
-            This whole site is built around one handwritten mark, so it seemed
-            only fair to hand you the pen. Draw something and it joins the wall
-            below — drawn the way you drew it.
-          </p>
-          <Image
-            src="/assets/signature.png"
-            alt={`${site.name}'s signature`}
-            width={1200}
-            height={389}
-            loading="eager"
-            className="signature-ink mt-5 h-10 w-auto opacity-80"
-          />
-        </header>
+        <Breadcrumb
+          trail={[
+            { label: "Playground", href: "/playground" },
+            { label: "Signature wall" },
+          ]}
+          title="Sign the wall"
+          lead="this whole site is built on one handwritten mark — here's the pen."
+        />
+
+        <Image
+          src="/assets/signature.png"
+          alt={`${site.name}'s signature`}
+          width={1200}
+          height={389}
+          loading="eager"
+          className="signature-ink mt-6 h-10 w-auto opacity-80"
+        />
 
         <form onSubmit={handleSubmit} className="mt-9">
           <div className="flex items-center justify-between gap-3">
